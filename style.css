@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin-top: 100;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 150px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(252, 221, 226);
+}
+h1{
+    position: absolute;
+    top: 20px;
+    left: 400px;
+    font-size: 40px;
+    font-family: cursive;
+    color: rgb(250, 72, 111);
+}
+.image{
+    margin-top: 60px;
+    margin-right: 80px;
+}
+.login-container {
+    width: 500px;
+    padding: 20px;
+    border-color: pink;
+    background-color: rgb(252, 221, 226);
+}
+
+.form-group {
+    margin-bottom: 50px;
+}
+
+label {
+    display: block;
+    margin-bottom: 25px;
+    font-family: sans-serif;
+    color: rgb(250, 72, 111);
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid rgb(247, 90, 116);
+    border-radius: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #f8076b;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #f8076b;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}

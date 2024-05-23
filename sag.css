@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(250, 232, 234);
+  }
+h1{
+    font-family: cursive;
+}
+  .top-section {
+    background-color: rgb(250, 232, 234);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .left-part img {
+    width: 100px; /* Adjust as needed */
+  }
+  
+  .center-part h1 {
+    margin: 0; /* Remove default margin */
+  }
+  
+  .right-part img {
+    width: 50px; /* Adjust as needed */
+    margin-left: 10px; /* Adjust spacing between images */
+  }
+  .img
+  {
+    margin-left: 400px;
+    margin-right: 400px;
+    margin-bottom: 1000px;
+    background-color: rgb(247, 247, 247);
+  }
+  
