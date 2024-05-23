@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fcb1b1;
+}
+h2{
+    font-family: cursive;
+}
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    padding-left: 150px; /* Add some space to the left */
+}
+
+.image-with-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Add some space between each image */
+}
+
+.image-with-heading h2 {
+    margin-left: 20px; /* Add some space between image and heading */
+}
+
+.circular-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 100px;
+}
+
+.circular-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px red;
+}

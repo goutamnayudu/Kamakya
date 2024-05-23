@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Chatbot</title>
+    <style>
+    /* Chat container styles */
+    #chat-container {
+        width: 300px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    /* Chat log styles */
+    #chat-log {
+        height: 300px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    /* Chat message styles */
+    .message {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .user {
+        background-color: #e6f2ff;
+        text-align: right;
+    }
+
+    .bot {
+        background-color: #f0f0f0;
+        text-align: left;
+    }
+
+    /* Input field and button styles */
+    #user-input {
+        width: calc(100% - 70px);
+        padding: 8px;
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+
+    #send-btn {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 3px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    #send-btn:hover {
+        background-color: #0056b3;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-log"></div>
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button id="send-btn">Send</button>
+    </div>
+
+    <script>
+        document.getElementById('send-btn').addEventListener('click', sendMessage);
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            displayMessage('user', userInput);
+            fetch('https://api.openai.com/v1/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'YOUR_API_KEY' // Replace 'YOUR_API_KEY' with your actual API key
+                },
+                body: JSON.stringify({ model: 'text-davinci-003', prompt: userInput, max_tokens: 150 })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayMessage('bot', data.choices[0].text);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayMessage(sender, message) {
+            const chatLog = document.getElementById('chat-log');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(sender);
+            messageElement.textContent = message;
+            chatLog.appendChild(messageElement);
+        }
+    </script>
+</body>
+</html>

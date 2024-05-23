@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatBot</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+    }
+
+    .chat-box {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        max-width: 500px;
+        margin: 20px auto;
+        background-color: #fff;
+        overflow: hidden;
+    }
+
+    .message-container {
+        padding: 10px;
+        overflow-y: auto;
+        max-height: 300px;
+    }
+
+    .message {
+        margin-bottom: 10px;
+        clear: both;
+        overflow: hidden;
+    }
+
+    .user-message {
+        background-color: #e5e5ea;
+        color: #333;
+        border-radius: 10px;
+        padding: 10px;
+        max-width: 70%;
+        float: right;
+    }
+
+    .bot-message {
+        background-color: #4caf50;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px;
+        max-width: 70%;
+        float: left;
+    }
+
+    #user-input {
+        width: calc(100% - 80px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    #send-btn {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #send-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<div class="chat-box">
+    <div class="message-container" id="chat-container"></div>
+    <div class="message">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const qaPairs = {
+        "Hi?": "HI..!! How can I help you.",
+        "What is the menstrual cycle?": "The menstrual cycle is a series of hormonal changes and physiological processes that occur in the female body to prepare for pregnancy.<br><br>It typically lasts about 28 days, although it can vary from person to person.",
+        "How long does a menstrual cycle typically last?": "A menstrual cycle usually lasts between 21 and 35 days, with the average being around 28 days. <br><br>However, it's normal for cycles to vary in length from month to month and for individuals to have cycles shorter or longer than the average.",
+        "What are the phases of the menstrual cycle?": "The menstrual cycle consists of four main phases: menstruation (bleeding), the follicular phase, ovulation, and the luteal phase. <br><br>Each phase is characterized by specific hormonal changes and physiological events in the body.",
+        "What causes menstruation to occur?": "Menstruation occurs when the lining of the uterus (endometrium) sheds in response to a drop in hormone levels, particularly estrogen and progesterone. <br><br>This shedding of the uterine lining is what causes menstrual bleeding.",
+        "Is it normal to experience irregular periods?": "Occasional irregularities in the menstrual cycle are common and usually not a cause for concern.<br><br> However, persistent irregularities or significant changes in menstrual patterns may indicate underlying health issues and should be evaluated by a healthcare provider.",
+        "How can I track my menstrual cycle?": "There are various methods for tracking the menstrual cycle, including keeping a calendar, using smartphone apps, or using dedicated fertility tracking devices. <br><br>Tracking factors such as cycle length, symptoms, and menstrual flow can help individuals better understand their cycles and identify any irregularities.",
+        "What is ovulation and how can I know when I'm ovulating?": "Ovulation is the release of an egg from the ovary, typically occurring around the middle of the menstrual cycle.<br><br> Signs of ovulation include changes in cervical mucus, a slight increase in basal body temperature, and changes in cervical position. Ovulation predictor kits can also help pinpoint ovulation.",
+        "What are some common menstrual disorders or conditions?": "Common menstrual disorders and conditions include polycystic ovary syndrome (PCOS), endometriosis, and premenstrual syndrome (PMS).<br><br> These conditions can cause symptoms such as irregular periods, pelvic pain, and mood changes, and may require medical management.",
+        "How can I manage menstrual discomfort or pain?": "Menstrual discomfort or pain can often be relieved with over-the-counter pain relievers such as ibuprofen or acetaminophen, applying heat to the abdomen, practicing relaxation techniques, and maintaining a healthy lifestyle with regular exercise and a balanced diet.",
+        "Can I get pregnant during my period?": "While it's less likely, it is possible to get pregnant during your period, especially if your menstrual cycle is shorter. <br><br>Sperm can survive in the female reproductive tract for several days, so if you have intercourse towards the end of your period and ovulate shortly afterward, conception may occur.",
+		"What to do if periods got delayed?":"If you're not experiencing any concerning symptoms and it's only been a few days past your expected period, it might be best to wait and monitor the situation.Practice stress-reduction techniques such as meditation, deep breathing exercises, yoga, or engaging in activities you enjoy.<br><br>If your period is consistently irregular or significantly delayed, or if you experience other concerning symptoms such as severe pain, abnormal bleeding, or other unusual symptoms, it's advisable to consult a healthcare provider.",
+		"What to eat to get periods?":"Consuming foods rich in iron is important for maintaining healthy blood levels, especially during menstruation when blood loss occurs.<br><br>Colorful fruits and vegetables are rich in vitamins, minerals, and antioxidants that support overall health and may help regulate menstrual cycles.<br><br>Drink plenty of water throughout the day, and consider incorporating hydrating foods like watermelon, cucumber, oranges, and celery into your diet.",
+        "Goodbye": "Goodbye! Have a great day!"
+    };
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value.trim();
+        if (userInput === '') return;
+
+        const chatContainer = document.getElementById('chat-container');
+
+        // Add user message to chat
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('message');
+        userMessage.innerHTML = "<div class='user-message'>" + userInput + "</div>";
+        chatContainer.appendChild(userMessage);
+
+        // Get closest question
+        const closestQuestion = getClosestMatch(userInput);
+
+        // Add bot response to chat
+        const botResponse = document.createElement('div');
+        botResponse.classList.add('message');
+        botResponse.innerHTML = "<div class='bot-message'>" + qaPairs[closestQuestion] + "</div>";
+        chatContainer.appendChild(botResponse);
+
+        // Clear input field
+        document.getElementById('user-input').value = '';
+
+        // Scroll to bottom
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function getClosestMatch(question) {
+        let closestQuestion = null;
+        let highestRatio = 0;
+
+        for (const q of Object.keys(qaPairs)) {
+            const ratio = similarity(question, q);
+            if (ratio > highestRatio) {
+                highestRatio = ratio;
+                closestQuestion = q;
+            }
+        }
+
+        return closestQuestion;
+    }
+
+    function similarity(s1, s2) {
+        const longer = s1.length > s2.length ? s1 : s2;
+        const shorter = s1.length > s2.length ? s2 : s1;
+        const longerLength = longer.length;
+        if (longerLength === 0) return 1.0;
+        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    }
+
+    function editDistance(s1, s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+
+        const costs = new Array();
+        for (let i = 0; i <= s1.length; i++) {
+            let lastValue = i;
+            for (let j = 0; j <= s2.length; j++) {
+                if (i === 0) {
+                    costs[j] = j;
+                } else {
+                    if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+            }
+            if (i > 0) costs[s2.length] = lastValue;
+        }
+        return costs[s2.length];
+    }
+</script>
+</body>
+</html>

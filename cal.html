@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Calendar</title>
+    <link rel="stylesheet" href="cal.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Period Calendar</h1>
+        <div>
+            <label for="start_date">Start Date of Last Period:</label>
+            <input type="date" id="start_date">
+        </div>
+        <div>
+            <label for="cycle_length">Length of Menstrual Cycle (in days):</label>
+            <input type="number" id="cycle_length">
+        </div>
+        <div>
+            <label for="period_length">Length of Period (in days):</label>
+            <input type="number" id="period_length">
+        </div>
+        <button onclick="predictPeriod()">Predict Next Period</button>
+        <p id="next_period_date"></p>
+    </div>
+
+    <script src="cal.js"></script>
+</body>
+</html>

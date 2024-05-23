@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(252, 222, 228);
+}
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #fa4e73;
+    border-radius: 5px;
+}
+
+input, button {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #f72452;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
